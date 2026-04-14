@@ -1,1 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoSphere | Шифрование</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --text: #f1f5f9;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
 
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 800px;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            padding-left: 5px;
+        }
+
+        textarea, select, input {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        textarea:focus, select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-encrypt {
+            background: var(--accent);
+            color: #0f172a;
+        }
+
+        .btn-decrypt {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+            transform: translateY(-2px);
+        }
+
+        .result-area {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            border-left: 4px solid var(--success);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>CRYPTOSPHERE</h1>
+    
+    <div class="input-group">
+        <label>Исходный текст</label>
+        <textarea id="inputText" placeholder="Введите текст для обработки..."></textarea>
+    </div>
+
+    <div class="grid" style="margin-top: 1.5rem;">
+        <div class="input-group">
+            <label>Алгоритм</label>
+            <select id="cipherType">
+                <option value="caesar">Шифр Цезаря</option>
+                <option value="atbash">Шифр Атбаша</option>
+                <option value="vigenere">Шифр Виженера</option>
+                <option value="gronsfeld">Шифр Гронсфельда</option>
+                <option value="morse">Азбука Морзе</option>
+                <option value="polybius">Квадрат Полибия</option>
+                <option value="bacon">Шифр Бэкона</option>
+                <option value="playfair">Шифр Плейфера</option>
+                <option value="hill">Шифр Хилла</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>Ключ / Сдвиг</label>
+            <input type="text" id="cipherKey" placeholder="Напр: 3 или KEY">
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn-encrypt">Зашифровать</button>
+        <button class="btn-decrypt">Расшифровать</button>
+    </div>
+
+    <div class="result-area">
+        <label>Результат:</label>
+        <div id="resultText" style="margin-top: 10px; word-break: break-all; font-family: monospace; color: var(--success);">...</div>
+    </div>
+</div>
+
+</body>
+</html>
