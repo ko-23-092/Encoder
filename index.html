@@ -3,149 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoSphere | Шифрование</title>
+    <title>CryptoSphere MAX</title>
     <style>
         :root {
-            --bg: #0a111e;
-            --card-bg: #141d2f;
-            --accent: #00e5ff;
-            --accent-glow: rgba(0, 229, 255, 0.4);
+            --bg: #050a14;
+            --card-bg: #0f172a;
+            --accent: #00d4ff;
+            --accent-glow: rgba(0, 212, 255, 0.3);
             --text: #ffffff;
-            --muted-text: #94a3b8;
-            --field-bg: #0a111e;
-            --field-border: #2d3b55;
-            --success: #00ff88;
+            --field: #1e293b;
+            --success: #00ff9d;
         }
 
-        body {
-            font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Segoe UI', Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden; /* Prevent body scroll, container will handle it */
+            color: var(--text);
         }
 
         .container {
+            width: 95vw;
+            height: 90vh;
             background: var(--card-bg);
-            width: 95%;
-            max-width: 1100px; /* Сделано шире */
-            height: 90vh; /* Занимает 90% высоты экрана */
-            padding: 3rem; /* Больше отступов */
-            border-radius: 24px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.7), 0 0 20px var(--accent-glow);
-            border: 2px solid var(--accent-glow);
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            overflow-y: auto; /* Позволяет прокручивать содержимое */
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 60px rgba(0,0,0,0.8), 0 0 30px var(--accent-glow);
+            display: grid;
+            grid-template-rows: auto 1fr auto auto;
+            padding: 40px;
+            box-sizing: border-box;
+            gap: 25px;
         }
 
         h1 {
-            text-align: center;
-            font-size: 3rem; /* Крупнее заголовок */
             margin: 0;
-            background: linear-gradient(135deg, #fff, var(--accent));
+            text-align: center;
+            font-size: 3.5rem;
+            letter-spacing: 10px;
+            background: linear-gradient(to right, #fff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 4px;
-            text-transform: uppercase;
         }
 
-        .group-container {
+        .input-section {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 10px;
         }
 
-        label {
-            font-size: 1rem; /* Крупнее подписи */
-            color: var(--muted-text);
-            text-transform: uppercase;
-            padding-left: 5px;
-            letter-spacing: 1px;
-        }
-
-        textarea, select, input {
-            background: var(--field-bg);
-            border: 2px solid var(--field-border);
+        textarea {
+            width: 100%;
+            height: 100%;
+            background: var(--field);
+            border: 2px solid #334155;
+            border-radius: 20px;
             color: white;
-            padding: 18px; /* Больше отступов внутри полей */
-            border-radius: 12px;
+            padding: 25px;
+            font-size: 1.4rem;
+            resize: none;
             outline: none;
+            box-sizing: border-box;
             transition: 0.3s;
-            font-size: 1.1rem; /* Крупнее текст в полях */
         }
 
-        textarea:focus, select:focus, input:focus {
+        textarea:focus {
             border-color: var(--accent);
             box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        textarea {
-            resize: none;
-            height: 200px; /* Больше места для текста */
-        }
-
-        .config-grid {
+        .controls {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr 1fr; /* Три колонки */
-            gap: 2rem;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 30px;
         }
 
-        .actions {
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        select, input {
+            padding: 18px;
+            background: var(--field);
+            border: 2px solid #334155;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            outline: none;
+        }
+
+        .buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 30px;
         }
 
         button {
-            padding: 20px; /* Крупнее кнопки */
+            padding: 25px;
+            border-radius: 20px;
             border: none;
-            border-radius: 12px;
-            cursor: pointer;
+            font-size: 1.5rem;
             font-weight: bold;
-            font-size: 1.2rem; /* Крупнее текст кнопок */
-            transition: 0.3s;
+            cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            transition: 0.3s;
         }
 
-        .btn-encrypt {
+        .encrypt-btn {
             background: var(--accent);
-            color: #0a111e;
-            box-shadow: 0 0 20px var(--accent-glow);
+            color: #000;
         }
 
-        .btn-decrypt {
+        .decrypt-btn {
             background: transparent;
             border: 2px solid var(--accent);
             color: var(--accent);
         }
 
         button:hover {
+            transform: scale(1.02);
             filter: brightness(1.2);
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px var(--accent-glow);
         }
 
-        .result-area {
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            border-left: 5px solid var(--success);
-            padding: 2rem;
-            min-height: 100px;
-        }
-
-        #resultText {
-            word-break: break-all;
-            font-family: 'Courier New', monospace;
+        .result-box {
+            background: rgba(0,0,0,0.4);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 8px solid var(--success);
+            min-height: 80px;
+            font-family: monospace;
+            font-size: 1.5rem;
             color: var(--success);
-            font-size: 1.2rem;
-            line-height: 1.5;
+            word-break: break-all;
         }
     </style>
 </head>
@@ -153,148 +157,115 @@
 
 <div class="container">
     <h1>CRYPTOSPHERE</h1>
-    
-    <div class="group-container">
-        <label>Исходный текст</label>
-        <textarea id="inputText" placeholder="Введите текст..."></textarea>
+
+    <div class="input-section">
+        <label>Текст для обработки</label>
+        <textarea id="mainInput" placeholder="Введите ваше сообщение здесь..."></textarea>
     </div>
 
-    <div class="config-grid">
-        <div class="group-container">
+    <div class="controls">
+        <div class="control-group">
             <label>Алгоритм</label>
-            <select id="cipherType">
+            <select id="algo">
                 <option value="caesar">Шифр Цезаря</option>
-                <option value="vigenere">Шифр Виженера</option>
+                <option value="atbash">Шифр Атбаша</option>
+                <option value="morse">Азбука Морзе</option>
             </select>
         </div>
-        
-        <div class="group-container">
+        <div class="control-group">
             <label>Язык</label>
-            <select id="cipherLanguage">
+            <select id="lang">
                 <option value="ru">Русский</option>
                 <option value="en">English</option>
             </select>
         </div>
-
-        <div class="group-container">
+        <div class="control-group">
             <label>Ключ / Сдвиг</label>
-            <input type="text" id="cipherKey" placeholder="Напр: 3 или KEY">
+            <input type="text" id="key" value="3">
         </div>
     </div>
 
-    <div class="actions">
-        <button class="btn-encrypt" onclick="processText('encrypt')">Зашифровать</button>
-        <button class="btn-decrypt" onclick="processText('decrypt')">Расшифровать</button>
+    <div class="buttons">
+        <button class="encrypt-btn" onclick="run(true)">Зашифровать</button>
+        <button class="decrypt-btn" onclick="run(false)">Расшифровать</button>
     </div>
 
-    <div class="group-container">
-        <label>Результат:</label>
-        <div class="result-area">
-            <div id="resultText">...</div>
-        </div>
-    </div>
+    <div class="result-box" id="output">Результат появится здесь...</div>
 </div>
 
 <script>
     const alphabets = {
-        ru: 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
-        en: 'abcdefghijklmnopqrstuvwxyz'
+        ru: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
+        en: "abcdefghijklmnopqrstuvwxyz"
     };
 
-    function processText(mode) {
-        const inputText = document.getElementById('inputText').value;
-        const cipherType = document.getElementById('cipherType').value;
-        const language = document.getElementById('cipherLanguage').value;
-        const key = document.getElementById('cipherKey').value;
-        const resultElement = document.getElementById('resultText');
+    const morseMap = {
+        'а': '.-', 'б': '-...', 'в': '.--', 'г': '--.', 'д': '-..', 'е': '.', 'ё': '.', 'ж': '...-', 'з': '--..',
+        'и': '..', 'й': '.---', 'к': '-.-', 'л': '.-..', 'м': '--', 'н': '-.', 'о': '---', 'п': '.--.',
+        'р': '.-.', 'с': '...', 'т': '-', 'у': '..-', 'ф': '..-.', 'х': '....', 'ц': '-.-.', 'ч': '---.',
+        'ш': '----', 'щ': '--.-', 'ъ': '--.--', 'ы': '-.--', 'ь': '-..-', 'э': '..-..', 'ю': '..--', 'я': '.-.-',
+        'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.', 'g': '--.', 'h': '....',
+        'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 'o': '---', 'p': '.--.',
+        'q': '--.-', 'r': '.-.', 's': '...', 't': '-', 'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-',
+        'y': '-.--', 'z': '--..', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
+        '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----', ' ': '/'
+    };
 
-        if (!inputText) {
-            resultElement.innerText = "ОШИБКА: Нет текста.";
-            return;
-        }
-        if (!key) {
-            resultElement.innerText = "ОШИБКА: Нет ключа.";
-            return;
-        }
-
+    function run(isEncrypt) {
+        const text = document.getElementById('mainInput').value;
+        const algo = document.getElementById('algo').value;
+        const lang = document.getElementById('lang').value;
+        const key = document.getElementById('key').value;
         let result = "";
 
-        switch (cipherType) {
-            case "caesar":
-                const shift = parseInt(key);
-                if (isNaN(shift)) {
-                    result = "ОШИБКА: Ключ для Цезаря должен быть числом.";
-                } else {
-                    result = caesarCipher(inputText, shift, language, mode);
-                }
-                break;
-            case "vigenere":
-                result = vigenereCipher(inputText, key, language, mode);
-                break;
-            // Добавь другие шифры здесь
-            default:
-                result = "ОШИБКА: Неизвестный шифр.";
+        if (!text) {
+            document.getElementById('output').innerText = "Введите текст!";
+            return;
         }
 
-        resultElement.innerText = result;
+        if (algo === "caesar") {
+            let shift = parseInt(key) || 0;
+            if (!isEncrypt) shift = alphabets[lang].length - (shift % alphabets[lang].length);
+            result = caesar(text, shift, alphabets[lang]);
+        } 
+        else if (algo === "atbash") {
+            result = atbash(text, alphabets[lang]);
+        }
+        else if (algo === "morse") {
+            result = isEncrypt ? toMorse(text) : fromMorse(text);
+        }
+
+        document.getElementById('output').innerText = result;
     }
 
-    // --- Логика Шифра Цезаря ---
-    function caesarCipher(text, shift, lang, mode) {
-        const alphabet = alphabets[lang];
-        if (!alphabet) return "ОШИБКА: Язык не поддерживается.";
-        const alphabetLen = alphabet.length;
-        if (mode === 'decrypt') shift = (alphabetLen - (shift % alphabetLen)) % alphabetLen; // Инвертируем сдвиг
-
+    function caesar(text, shift, alphabet) {
         return text.split('').map(char => {
-            const isUpper = char === char.toUpperCase();
-            const lowerChar = char.toLowerCase();
-            const index = alphabet.indexOf(lowerChar);
-
-            if (index === -1) return char; // Оставляем знаки препинания и пробелы
-
-            let newIndex = (index + shift) % alphabetLen;
-            const newChar = alphabet[newIndex];
-            return isUpper ? newChar.toUpperCase() : newChar;
+            const lowChar = char.toLowerCase();
+            const idx = alphabet.indexOf(lowChar);
+            if (idx === -1) return char;
+            let newIdx = (idx + shift) % alphabet.length;
+            const resChar = alphabet[newIdx];
+            return char === char.toUpperCase() ? resChar.toUpperCase() : resChar;
         }).join('');
     }
 
-    // --- Логика Шифра Виженера ---
-    function vigenereCipher(text, key, lang, mode) {
-        const alphabet = alphabets[lang];
-        if (!alphabet) return "ОШИБКА: Язык не поддерживается.";
-        const alphabetLen = alphabet.length;
-        key = key.toLowerCase();
-        
-        let keyIndex = 0;
+    function atbash(text, alphabet) {
+        const rev = alphabet.split('').reverse().join('');
         return text.split('').map(char => {
-            const isUpper = char === char.toUpperCase();
-            const lowerChar = char.toLowerCase();
-            const charIndex = alphabet.indexOf(lowerChar);
-
-            if (charIndex === -1) return char; // Оставляем символы вне алфавита
-
-            // Берем текущий символ ключа
-            const keyChar = key[keyIndex % key.length];
-            const keyCharIndex = alphabet.indexOf(keyChar);
-            
-            // Если символ ключа не из алфавита, пропускаем его
-            if (keyCharIndex === -1) {
-                keyIndex++; // Пропускаем ключ, но возвращаем исходный символ
-                return char;
-            }
-
-            let newIndex;
-            if (mode === 'encrypt') {
-                newIndex = (charIndex + keyCharIndex) % alphabetLen;
-            } else {
-                newIndex = (charIndex - keyCharIndex + alphabetLen) % alphabetLen;
-            }
-
-            const newChar = alphabet[newIndex];
-            keyIndex++;
-            return isUpper ? newChar.toUpperCase() : newChar;
+            const idx = alphabet.indexOf(char.toLowerCase());
+            if (idx === -1) return char;
+            const resChar = rev[idx];
+            return char === char.toUpperCase() ? resChar.toUpperCase() : resChar;
         }).join('');
+    }
+
+    function toMorse(text) {
+        return text.toLowerCase().split('').map(char => morseMap[char] || char).join(' ');
+    }
+
+    function fromMorse(text) {
+        const reverseMorse = Object.fromEntries(Object.entries(morseMap).map(([k, v]) => [v, k]));
+        return text.split(' ').map(code => reverseMorse[code] || code).join('');
     }
 </script>
 
