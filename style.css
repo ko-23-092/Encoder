@@ -18,6 +18,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .container {
@@ -60,6 +61,12 @@ textarea {
     font-size: 1.5rem;
     resize: none;
     outline: none;
+    transition: 0.3s;
+}
+
+textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
 }
 
 .controls {
@@ -78,6 +85,7 @@ label {
     color: #94a3b8;
     font-weight: bold;
     text-transform: uppercase;
+    font-size: 0.9rem;
 }
 
 select, input {
@@ -87,6 +95,15 @@ select, input {
     border-radius: 12px;
     color: white;
     font-size: 1.1rem;
+    outline: none;
+}
+
+/* Стиль для заблокированного поля */
+input:disabled {
+    background: #0a111e;
+    color: #475569;
+    cursor: not-allowed;
+    border-style: dashed;
 }
 
 .buttons {
@@ -103,24 +120,39 @@ button {
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
+    text-transform: uppercase;
 }
 
-.encrypt-btn { background: var(--accent); color: #000; }
-.decrypt-btn { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+.encrypt-btn {
+    background: var(--accent);
+    color: #000;
+}
 
-button:hover { transform: translateY(-3px); box-shadow: 0 0 20px var(--accent-glow); }
+.decrypt-btn {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px var(--accent-glow);
+    filter: brightness(1.1);
+}
 
 .result-box {
     background: rgba(0,0,0,0.4);
     padding: 25px;
     border-radius: 15px;
     border-left: 8px solid var(--success);
+    min-height: 100px;
 }
 
 #output {
-    font-family: monospace;
+    font-family: 'Courier New', monospace;
     font-size: 1.6rem;
     color: var(--success);
     word-break: break-all;
     margin-top: 10px;
+    white-space: pre-wrap; /* Чтобы Морзе и Бэкон не слипались */
 }
