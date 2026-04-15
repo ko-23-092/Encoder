@@ -77,17 +77,42 @@ function vigenere(text, key, abc, isEncrypt, isGronsfeld) {
     }).join('');
 }
 
-function polybius(text, abc, isEncrypt) {
-    const size = Math.ceil(Math.sqrt(abc.length));
-    if (isEncrypt) {
-        return text.toLowerCase().split('').map(c => {
-            const i = abc.indexOf(c);
-            return i === -1 ? c : `${Math.floor(i/size)+1}${i%size+1} `;
-        }).join('').trim();
+function polybius(text, lang, isEncrypt) {
+    let grid, cols;
+    
+    // Выбираем сетку в зависимости от языка
+    if (lang === 'en') {
+        // Английская сетка 5x5 (J сливается с I)
+        grid = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+        cols = 5;
+        // Убираем J и оставляем только английские буквы
+        if (isEncrypt) text = text.toUpperCase().replace(/J/g, "I").replace(/[^A-Z]/g, "");
     } else {
-        const coords = text.match(/\d{2}/g);
-        if (!coords) return "Ошибка (нужны пары цифр)";
-        return coords.map(c => abc[(parseInt(c[0])-1)*size + (parseInt(c[1])-1)] || '?').join('');
+        // Русская сетка 6x6 по таблице преподавателя (включая знаки препинания)
+        grid = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ.,?";
+        cols = 6;
+        // Оставляем только русские буквы и разрешенные знаки
+        if (isEncrypt) text = text.toUpperCase().replace(/[^А-ЯЁ.,?]/g, "");
+    }
+
+    if (isEncrypt) {
+        // Шифрование: ищем индекс, вычисляем строку и столбец
+        return text.split('').map(c => {
+            let i = grid.indexOf(c);
+            if (i === -1) return "";
+            let row = Math.floor(i / cols) + 1;
+            let col = (i % cols) + 1;
+            return row.toString() + col.toString();
+        }).join(' ');
+    } else {
+        // Расшифровка: разбиваем по пробелам, берем пары цифр
+        let parts = text.trim().split(/\s+/);
+        return parts.map(p => {
+            if (p.length !== 2) return "";
+            let r = parseInt(p[0]) - 1;
+            let c = parseInt(p[1]) - 1;
+            return grid[r * cols + c] || "?";
+        }).join('');
     }
 }
 
