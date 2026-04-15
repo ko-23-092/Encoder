@@ -78,25 +78,35 @@ function vigenere(text, key, abc, isEncrypt, isGronsfeld) {
 }
 
 function polybius(text, lang, isEncrypt) {
+    if (!text) return "";
+
     let grid, cols;
     
-    // Выбираем сетку в зависимости от языка
-    if (lang === 'en') {
-        // Английская сетка 5x5 (J сливается с I)
-        grid = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+    // Делаем гибкую проверку: ищем 'en' или 'english' в любом регистре
+    let isEnglish = String(lang).toLowerCase().includes('en');
+
+    if (isEnglish) {
+        // Английская сетка 5x5
+        grid = "ABCDEFGHIKLMNOPQRSTUVWXYZ"; 
         cols = 5;
-        // Убираем J и оставляем только английские буквы
-        if (isEncrypt) text = text.toUpperCase().replace(/J/g, "I").replace(/[^A-Z]/g, "");
+        if (isEncrypt) {
+            // Переводим в ВЕРХНИЙ регистр, меняем J на I, удаляем всё кроме A-Z
+            text = text.toUpperCase().replace(/J/g, "I").replace(/[^A-Z]/g, "");
+        }
     } else {
-        // Русская сетка 6x6 по таблице преподавателя (включая знаки препинания)
-        grid = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ.,?";
+        // Русская сетка 6x6
+        grid = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ.,?"; 
         cols = 6;
-        // Оставляем только русские буквы и разрешенные знаки
-        if (isEncrypt) text = text.toUpperCase().replace(/[^А-ЯЁ.,?]/g, "");
+        if (isEncrypt) {
+            // Удаляем всё, кроме А-Я, Ё и знаков .,?
+            text = text.toUpperCase().replace(/[^А-ЯЁ.,?]/g, "");
+        }
     }
 
+    // Если после фильтрации символов ничего не осталось (например, ввели английский текст при выбранном русском)
+    if (!text) return "Ошибка: текст не совпадает с выбранным языком";
+
     if (isEncrypt) {
-        // Шифрование: ищем индекс, вычисляем строку и столбец
         return text.split('').map(c => {
             let i = grid.indexOf(c);
             if (i === -1) return "";
@@ -105,12 +115,13 @@ function polybius(text, lang, isEncrypt) {
             return row.toString() + col.toString();
         }).join(' ');
     } else {
-        // Расшифровка: разбиваем по пробелам, берем пары цифр
         let parts = text.trim().split(/\s+/);
         return parts.map(p => {
-            if (p.length !== 2) return "";
+            if (p.length !== 2) return ""; // Пропускаем кривые куски
             let r = parseInt(p[0]) - 1;
             let c = parseInt(p[1]) - 1;
+            // Защита от выхода за пределы матрицы
+            if (r < 0 || r >= cols || c < 0 || c >= cols) return "?";
             return grid[r * cols + c] || "?";
         }).join('');
     }
